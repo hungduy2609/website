@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --font-comic: 'Comic Neue', cursive;
+        --font-poppins: 'Poppins', sans-serif;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: var(--font-poppins);
+    background-color: #fff9f5;
+    color: #2c2c2c;
+}
+
+.kawaii-gradient {
+    background: linear-gradient(135deg, #fff9f5 0%, #ffb6c1 100%);
+}
+
+.sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #ff8fb1 0%, transparent 70%);
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
