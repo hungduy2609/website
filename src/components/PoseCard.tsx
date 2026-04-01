@@ -1,6 +1,10 @@
 'use client';
 
-import { Heart, MapPin, Shirt, Sparkles } from 'lucide-react';
+import { Heart, Shirt, Sparkles, BookMarked } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface PoseCardProps {
     id: number;
@@ -11,60 +15,79 @@ interface PoseCardProps {
     outfitCount?: number;
     makeupCount?: number;
     likes?: number;
+    /** Masonry height variant: 'tall' | 'medium' | 'short' */
+    heightVariant?: 'tall' | 'medium' | 'short';
 }
 
-export default function PoseCard({ id, title, image, badge = 'Trend 2026', location = 'Đà Lạt', outfitCount = 5, makeupCount = 3, likes = 156 }: PoseCardProps) {
+const heightMap = {
+    tall: 'h-[480px]',
+    medium: 'h-[360px]',
+    short: 'h-[300px]',
+};
+
+export default function PoseCard({ title, image, badge = 'Trend 2026', outfitCount = 5, makeupCount = 3, likes = 156, heightVariant = 'medium' }: PoseCardProps) {
     return (
-        <div className="group">
-            <div className="bg-white rounded-3xl shadow-kawaii overflow-hidden hover:shadow-kawaii-hover hover:scale-105 transition-all duration-300">
-                {/* Image Container */}
-                <div className="relative h-[420px] overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10" />
-                    <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+        <Card className="group overflow-hidden rounded-[24px] border-0 bg-white shadow-kawaii hover:shadow-kawaii-hover hover:scale-[1.02] transition-all duration-300">
+            {/* Image */}
+            <div className={cn('relative overflow-hidden', heightMap[heightVariant])}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10" />
+                <img
+                    src={image}
+                    alt={title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
 
-                    {/* Trend Badge */}
-                    {badge && (
-                        <div className="absolute top-4 left-4 z-20">
-                            <span className="inline-block px-4 py-2 bg-primary-pink text-white font-poppins font-semibold rounded-full text-sm">{badge}</span>
-                        </div>
-                    )}
-
-                    {/* Heart Icon */}
-                    <button className="absolute top-4 right-4 z-20 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
-                        <Heart className="w-5 h-5 text-primary-pink fill-primary-pink" />
-                    </button>
+                {/* Trend Badge */}
+                <div className="absolute top-3 left-3 z-20">
+                    <Badge className="bg-[#FFB6C1] text-white border-0 rounded-full px-3 py-1 text-xs font-semibold font-poppins shadow-sm">
+                        ✨ {badge}
+                    </Badge>
                 </div>
 
-                {/* Card Content */}
-                <div className="p-5">
-                    {/* Title */}
-                    <h3 className="font-comic font-bold text-xl text-primary-dark mb-3">{title}</h3>
+                {/* Like button */}
+                <button className="absolute top-3 right-3 z-20 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 shadow-sm">
+                    <Heart className="w-4 h-4 text-[#FFB6C1] fill-[#FFB6C1]" />
+                </button>
 
-                    {/* Info Icons */}
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="flex items-center gap-1 text-gray-600">
-                            <Shirt className="w-4 h-4 text-primary-mint" />
-                            <span className="font-poppins text-sm">{outfitCount} outfit</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-gray-600">
-                            <Sparkles className="w-4 h-4 text-primary-lavender" />
-                            <span className="font-poppins text-sm">{makeupCount} makeup</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-gray-600">
-                            <MapPin className="w-4 h-4 text-primary-pink" />
-                            <span className="font-poppins text-sm">{location}</span>
-                        </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3">
-                        <button className="flex-1 px-4 py-3 bg-primary-pink text-white font-poppins font-semibold rounded-2xl hover:bg-primary-sparkle transition-colors">Thử pose này</button>
-                        <button className="px-4 py-3 bg-primary-cream border-2 border-primary-pink/30 text-primary-pink font-poppins font-semibold rounded-2xl hover:bg-primary-pink/10 transition-colors">
-                            <Heart className="w-5 h-5" />
-                        </button>
-                    </div>
+                {/* Likes count floating at bottom */}
+                <div className="absolute bottom-3 right-3 z-20 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 flex items-center gap-1">
+                    <Heart className="w-3 h-3 text-[#FFB6C1] fill-[#FFB6C1]" />
+                    <span className="text-xs font-poppins font-medium text-gray-700">{likes}</span>
                 </div>
             </div>
-        </div>
+
+            {/* Card Body */}
+            <CardContent className="p-4">
+                <h3 className="font-comic font-bold text-[15px] text-primary-dark mb-3 leading-tight">{title}</h3>
+
+                {/* Icon Meta */}
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center gap-1.5 bg-[#B5EAD7]/30 rounded-full px-2.5 py-1">
+                        <Shirt className="w-3.5 h-3.5 text-[#4db899]" />
+                        <span className="font-poppins text-xs text-gray-600">{outfitCount} outfit</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-[#E0BBE4]/30 rounded-full px-2.5 py-1">
+                        <Sparkles className="w-3.5 h-3.5 text-[#c07cd4]" />
+                        <span className="font-poppins text-xs text-gray-600">{makeupCount} makeup</span>
+                    </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                    <Button
+                        className="flex-1 h-9 rounded-[14px] bg-[#FFB6C1] hover:bg-[#FF8FB1] text-white font-poppins font-semibold text-xs border-0 shadow-none transition-colors"
+                    >
+                        Thử pose này
+                    </Button>
+                    <Button
+                        variant="outline"
+                        className="h-9 px-3 rounded-[14px] border-[#E0BBE4] text-[#c07cd4] hover:bg-[#E0BBE4]/20 font-poppins text-xs gap-1.5"
+                    >
+                        <BookMarked className="w-3.5 h-3.5" />
+                        Lưu
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 }

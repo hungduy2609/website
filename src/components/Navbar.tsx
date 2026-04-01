@@ -27,7 +27,7 @@ export default function Navbar() {
                         <a href="#" className="font-poppins font-medium text-primary-dark hover:text-primary-pink transition-colors">
                             Home
                         </a>
-                        <a href="#poses" className="font-poppins font-medium text-primary-dark hover:text-primary-pink transition-colors">
+                        <a href="/pose" className="font-poppins font-medium text-primary-dark hover:text-primary-pink transition-colors">
                             Pose
                         </a>
                         <a href="#outfits" className="font-poppins font-medium text-primary-dark hover:text-primary-pink transition-colors">
